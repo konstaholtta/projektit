@@ -63,18 +63,18 @@
  * - Possible questions, remarks, etc.
  */
 
-
+#include <fstream>
 #include <iostream>
-#include <vector>
 #include <map>
 #include <set>
-#include <fstream>
+#include <vector>
+
+// testi kommentti
 
 using namespace std;
 
 // Enum class to be used for file handling.
-enum class DATA_FIELDS { ROOM, PLANT, WATERING_PERIOD, FERTILIZATION_PERIOD,
-                         FIELDS };
+enum class DATA_FIELDS { ROOM, PLANT, WATERING_PERIOD, FERTILIZATION_PERIOD, FIELDS };
 
 // Error messages for file handling.
 const string ERROR_FILE = "Error: Unable to open file.";
@@ -83,37 +83,35 @@ const string ERROR_PERIOD = "Error: Invalid expression of a number in the data f
 
 // Enum class and vector to be used for weekday handling.
 // You can index the vector by using the corresponding enum value.
-enum class DAY { MONDAY, TUESDAY, WEDNESDAY, THURSDAY,
-                 FRIDAY, SATURDAY, SUNDAY, DAYS_A_WEEK };
+enum class DAY { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY, DAYS_A_WEEK };
 
-const vector<string> WEEKDAYS = { "Monday", "Tuesday", "Wednesday",
-                                 "Thursday", "Friday", "Saturday", "Sunday" };
+const vector<string> WEEKDAYS
+    = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
 // Enum class and command word map to be used for command handling.
 // You can access the correct enum command value depending on the command words
 // listed on the COMMANDS map, and check the needed amount of parameters from the
 // COMMAND_PARAMS map.
-enum class COMMAND { HELP, LIST_ALL, LIST_ROOM, PRINT_SCHEDULE, MOVE_PLANT,
-                     ADD_PLANT, QUIT };
+enum class COMMAND { HELP, LIST_ALL, LIST_ROOM, PRINT_SCHEDULE, MOVE_PLANT, ADD_PLANT, QUIT };
 
-const map<string, COMMAND> COMMANDS = { { "help", COMMAND::HELP },
-                                        { "ls", COMMAND:: LIST_ALL },
-                                        { "list all", COMMAND::LIST_ALL },
-                                        { "room", COMMAND::LIST_ROOM },
-                                        { "list room", COMMAND::LIST_ROOM },
-                                        { "sch", COMMAND::PRINT_SCHEDULE },
-                                        { "mv", COMMAND::MOVE_PLANT },
-                                        { "add", COMMAND::ADD_PLANT },
-                                        { "quit", COMMAND::QUIT },
-                                        { "q", COMMAND::QUIT } };
+const map<string, COMMAND> COMMANDS = {{"help", COMMAND::HELP},
+                                       {"ls", COMMAND::LIST_ALL},
+                                       {"list all", COMMAND::LIST_ALL},
+                                       {"room", COMMAND::LIST_ROOM},
+                                       {"list room", COMMAND::LIST_ROOM},
+                                       {"sch", COMMAND::PRINT_SCHEDULE},
+                                       {"mv", COMMAND::MOVE_PLANT},
+                                       {"add", COMMAND::ADD_PLANT},
+                                       {"quit", COMMAND::QUIT},
+                                       {"q", COMMAND::QUIT}};
 
-const map<COMMAND, size_t> COMMAND_PARAMS = { { COMMAND::HELP, 0 },
-                                              { COMMAND::LIST_ALL, 0 },
-                                              { COMMAND::LIST_ROOM, 1 },
-                                              { COMMAND::PRINT_SCHEDULE, 0 },
-                                              { COMMAND::MOVE_PLANT, 4 },
-                                              { COMMAND::ADD_PLANT, 4 },
-                                              { COMMAND::QUIT, 0 } };
+const map<COMMAND, size_t> COMMAND_PARAMS = {{COMMAND::HELP, 0},
+                                             {COMMAND::LIST_ALL, 0},
+                                             {COMMAND::LIST_ROOM, 1},
+                                             {COMMAND::PRINT_SCHEDULE, 0},
+                                             {COMMAND::MOVE_PLANT, 4},
+                                             {COMMAND::ADD_PLANT, 4},
+                                             {COMMAND::QUIT, 0}};
 
 // Error messages for command handling and commands.
 const string ERROR_COMMAND = "Error: Command not found.";
@@ -142,23 +140,20 @@ struct Plant
 
     // The plants are defined to be the same, if all of the decriptive values
     // match: the name, the watering period and the pot color.
-    bool operator== (const Plant& other) const
+    bool operator==(const Plant &other) const
     {
-        return name == other.name and
-               watering_period == other.watering_period and
-               pot_color == other.pot_color;
+        return name == other.name and watering_period == other.watering_period
+               and pot_color == other.pot_color;
     };
 
     // The plants are ordered depending first on the name, then the
     // watering period and at last (if needed), the pot color.
-    bool operator<(const Plant& other) const
+    bool operator<(const Plant &other) const
     {
-        if ( name != other.name )
-        {
+        if (name != other.name) {
             return name < other.name;
         }
-        if ( watering_period != other.watering_period )
-        {
+        if (watering_period != other.watering_period) {
             return watering_period < other.watering_period;
         }
         return pot_color < other.pot_color;
@@ -168,7 +163,6 @@ struct Plant
 // Choose a suitable container and define it here.
 // Note: Don't *initialize* the structure here, but within the main function.
 using Plant_info = /*.. Write your structure definition here ..*/;
-
 
 int main()
 {
